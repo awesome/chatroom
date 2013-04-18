@@ -3,15 +3,19 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node app.js"
+    "start": "PORT=3333 node app.js"
   },
   "dependencies": {
     "express": "3.1.1",
     "jade": "*",
     "less-middleware": "*",
     "coffee-script": "*"
+    , "socket.io": "*"
+    , "underscore": "*"
   },
   "devDependencies": {
     "grunt": "~0.4.1"
+    , "which": "*"
+    , "supervisor": "*"
   }
 }

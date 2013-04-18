@@ -1,5 +1,17 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  .container#chat(ng-app='ChatModule', ng-controller='ChatCtrl')
+    .msg_box(ng-show='open_msg_box')
+      .span2#chatters
+        ul.unstyled
+          p Current Users
+          li.well.well-small(ng-repeat='chatter in chatters')
+            a(href='#') {{ chatter }}
+      .span9#public_msg_box
+        .msg.well(ng-repeat='msg in public_msg')
+          p {{ msg.from }} : {{ msg.content }}
+    #register_box.text-center(ng-show='ready_to_join()', style='margin-top: 10em')
+      p#register_fail(ng-show='register_failed') {{ failed_msg }}
+      input#register.text-center.lead.input-block-level.input-xlarge.search-query(type="text", ng-model='name', placeholder='Please Enter Your Name')
+      button.btn.btn-success(ng-click='register()', style='margin-left: 1em') Join

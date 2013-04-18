@@ -2,4 +2,8 @@
 (function() {
   console.log('Testing');
 
+  console.log('Testing');
+
+  console.log('Testing');
+
 }).call(this);
