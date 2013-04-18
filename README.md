@@ -1,5 +1,8 @@
-TODO
-================
+INSTALL
+=======
+	npm install
+	cake app
 
-> Build auto mapping from coffee to js
-> Build Test first
+TODO
+====
+Ignore sanitize msg from system
