@@ -8,12 +8,16 @@ block content
           p Current Users
           li.well.well-small(ng-repeat='chatter in chatters')
             a(href='#') {{ chatter }}
+
       .span9#public_msg_box
-        .msg.well(ng-repeat='msg in public_msg')
-          {{ msg.from }} : {{ msg.content }}
-          // span(ng-bind-html-unsafe="{{if(msg.from == 'System') msg.content}}")
-          // span(ng-bind-template="{{if(msg.from != 'System') msg.content}}")
+        .messages.well(ng-repeat='msg in public_msg')
+          .msg(ng-switch="msg.from")
+            | <span class="from"> {{ msg.from }} : </span>
+            | <span class="content" ng-switch-when="System" ng-bind-html-unsafe="msg.content"></span>
+            span.content(ng-switch-default ng-bind="msg.content")
+
     #register_box.text-center(ng-show='ready_to_join()', style='margin-top: 10em')
-      p#register_fail(ng-bind="failed_msg")
+      .alert_box(style='margin-bottom: 1em')
+        span.alert-error#register_fail(ng-bind="failed_msg")
       input#register.text-center.lead.input-block-level.input-xlarge.search-query(type="text", ng-model='name', placeholder='Please Enter Your Name')
       button.btn.btn-success(ng-click='register()', style='margin-left: 1em') Join

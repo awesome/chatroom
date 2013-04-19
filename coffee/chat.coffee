@@ -3,7 +3,7 @@ module.exports = (socket)->
     socket.chaterName = name
     chatters.push(name)
     socket.emit('chatters', chatters)
-    socket.emit('notice', { from: 'System', content: "Welcome #{name}" })
+    socket.emit('notice', { from: 'System', content: "Welcome <b>#{name}</b>" })
     socket.broadcast.emit('notice', {from: 'System', content: "<b>#{name}</b> Join the chatroom"})
     socket.broadcast.emit('chatters', chatters)
   )

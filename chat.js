@@ -7,7 +7,7 @@
       socket.emit('chatters', chatters);
       socket.emit('notice', {
         from: 'System',
-        content: "Welcome " + name
+        content: "Welcome <b>" + name + "</b>"
       });
       socket.broadcast.emit('notice', {
         from: 'System',

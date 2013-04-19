@@ -20,11 +20,11 @@
     $scope.ready_to_join = function() {
       return $scope.chatters !== void 0 && !$scope.open_msg_box;
     };
-    $scope.reserved_username = ['System'];
+    $scope.reserved_username = ['system'];
     return $scope.register = function() {
       if (_.contains($scope.chatters, $scope.name)) {
         return $scope.failed_msg = "Sorry, " + $scope.name + " was existed. Please choose another name";
-      } else if (_.contains($scope.reserved_username, $scope.name)) {
+      } else if (_.contains($scope.reserved_username, $scope.name.toLowerCase())) {
         return $scope.failed_msg = "Hmmm, reserved username cant be used";
       } else {
         $scope.open_msg_box = true;
