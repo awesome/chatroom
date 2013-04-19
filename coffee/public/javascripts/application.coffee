@@ -1,4 +1,4 @@
-socket = io.connect('http://localhost:3333')
+socket = io.connect("#{location.protocol}//#{location.host}")
 
 CM = angular.module('ChatModule', [])
 
@@ -19,10 +19,13 @@ CM.controller('ChatCtrl', ($scope)->
   $scope.ready_to_join = ->
     $scope.chatters != undefined and !$scope.open_msg_box
 
+  $scope.reserved_username = ['System']
+
   $scope.register = ->
     if _.contains($scope.chatters, $scope.name)
-      $scope.register_failed = true
       $scope.failed_msg = "Sorry, #{$scope.name} was existed. Please choose another name"
+    else if _.contains($scope.reserved_username, $scope.name)
+      $scope.failed_msg = "Hmmm, reserved username cant be used"
     else
       $scope.open_msg_box = true
       socket.emit('join', $scope.name)

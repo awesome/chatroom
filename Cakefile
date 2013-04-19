@@ -26,13 +26,13 @@ watch_coffee = (callback)->
   # console.log compile_options
   build(callback)
 
-test_server = (callback)->
+test_server = ->
   process.env.PORT = 5000
   options = ['app.js']
   cmd = which.sync 'node'
   test_app = spawn cmd, options, {detached: true, stdio: ['ignore', 'ignore', process.stderr]}
   test_app.unref()
-  callback()
+  console.log "Test server launch on port #{process.env.PORT} and PID as #{test_app.pid}"
   test_app.pid
 
 app = ->
