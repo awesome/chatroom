@@ -16,8 +16,8 @@ block content
             | <span class="content" ng-switch-when="System" ng-bind-html-unsafe="msg.content"></span>
             span.content(ng-switch-default ng-bind="msg.content")
 
-    #register_box.text-center(ng-show='ready_to_join()', style='margin-top: 10em')
+    #register_box.text-center(ng-hide='open_msg_box', style='margin-top: 10em')
       .alert_box(style='margin-bottom: 1em')
-        span.alert-error#register_fail(ng-bind="failed_msg")
+        span.alert-error#register_fail(ng-show='failed_msg', ng-bind="failed_msg")
       input#register.text-center.lead.input-block-level.input-xlarge.search-query(type="text", ng-model='name', placeholder='Please Enter Your Name')
       button.btn.btn-success(ng-click='register()', style='margin-left: 1em') Join

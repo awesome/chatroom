@@ -2,18 +2,22 @@
 (function() {
   module.exports = function(socket) {
     socket.on('join', function(name) {
-      socket.chaterName = name;
-      chatters.push(name);
-      socket.emit('chatters', chatters);
-      socket.emit('notice', {
-        from: 'System',
-        content: "Welcome <b>" + name + "</b>"
-      });
-      socket.broadcast.emit('notice', {
-        from: 'System',
-        content: "<b>" + name + "</b> Join the chatroom"
-      });
-      return socket.broadcast.emit('chatters', chatters);
+      if (__.contains(chatters, name)) {
+        return socket.emit('repeated_name_error');
+      } else {
+        socket.chaterName = name;
+        chatters.push(name);
+        socket.emit('init_chatters', chatters);
+        socket.emit('notice', {
+          from: 'System',
+          content: "Welcome <b>" + name + "</b>"
+        });
+        socket.broadcast.emit('notice', {
+          from: 'System',
+          content: "<b>" + name + "</b> Join the chatroom"
+        });
+        return socket.broadcast.emit('chatters', chatters);
+      }
     });
     socket.on('disconnect', function() {
       var name;

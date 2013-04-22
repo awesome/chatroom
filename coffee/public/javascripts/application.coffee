@@ -1,31 +1,35 @@
-socket = io.connect("#{location.protocol}//#{location.host}")
 
 CM = angular.module('ChatModule', [])
 
 CM.controller('ChatCtrl', ($scope)->
   $scope.public_msg = []
-  socket.on('chatters', (members)->
-    $scope.chatters = members
-    $scope.$apply()
-  )
-  socket.on('notice', (msg_object)->
-    $scope.public_msg.push(msg_object)
-    $scope.$apply()
-  )
-
-  socket.emit 'current_chatters'
-
-  $scope.ready_to_join = ->
-    $scope.chatters != undefined and !$scope.open_msg_box
 
   $scope.reserved_username = ['system']
 
   $scope.register = ->
-    if _.contains($scope.chatters, $scope.name)
-      $scope.failed_msg = "Sorry, #{$scope.name} was existed. Please choose another name"
-    else if _.contains($scope.reserved_username, $scope.name.toLowerCase())
+    if _.contains($scope.reserved_username, $scope.name.toLowerCase())
       $scope.failed_msg = "Hmmm, reserved username cant be used"
     else
-      $scope.open_msg_box = true
+      socket = io.connect("#{location.protocol}//#{location.host}")
+      # how to move the socket feature in a standalone function
+      socket.on('init_chatters', (members)->
+        $scope.chatters = members
+        $scope.open_msg_box = true
+        $scope.failed_msg = null
+        $scope.$apply()
+      )
+      socket.on 'repeated_name_error', ->
+        $scope.failed_msg = "Sorry, #{$scope.name} was existed. Please choose another name"
+        $scope.$apply()
+      socket.on('chatters', (members)->
+        $scope.chatters = members
+        $scope.open_msg_box = true
+        $scope.$apply()
+      )
+      socket.on('notice', (msg_object)->
+        $scope.public_msg.push(msg_object)
+        $scope.$apply()
+      )
       socket.emit('join', $scope.name)
+
 )

@@ -1,11 +1,14 @@
 module.exports = (socket)->
   socket.on('join', (name)->
-    socket.chaterName = name
-    chatters.push(name)
-    socket.emit('chatters', chatters)
-    socket.emit('notice', { from: 'System', content: "Welcome <b>#{name}</b>" })
-    socket.broadcast.emit('notice', {from: 'System', content: "<b>#{name}</b> Join the chatroom"})
-    socket.broadcast.emit('chatters', chatters)
+    if __.contains(chatters, name)
+      socket.emit('repeated_name_error')
+    else
+      socket.chaterName = name
+      chatters.push(name)
+      socket.emit('init_chatters', chatters)
+      socket.emit('notice', { from: 'System', content: "Welcome <b>#{name}</b>" })
+      socket.broadcast.emit('notice', {from: 'System', content: "<b>#{name}</b> Join the chatroom"})
+      socket.broadcast.emit('chatters', chatters) # how to filter broadcast to the registed socket
   )
   socket.on('disconnect', ->
     name = socket.chaterName
