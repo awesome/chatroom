@@ -5,5 +5,5 @@ test/*feature.js
 # ignore generated js file
 chat.js
 app/*
-public/javascripts/application.coffee
+public/javascripts/application.js
 server/*
