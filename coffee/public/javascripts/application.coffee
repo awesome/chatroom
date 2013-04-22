@@ -20,6 +20,7 @@ CM.controller('ChatCtrl', ($scope)->
       )
       socket.on 'repeated_name_error', ->
         $scope.failed_msg = "Sorry, #{$scope.name} was existed. Please choose another name"
+        # socket.emit('disconnect') # we cant emit it, the log said debug: ignoring blacklisted event `disconnect`
         $scope.$apply()
       socket.on('chatters', (members)->
         $scope.chatters = members

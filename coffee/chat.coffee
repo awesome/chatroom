@@ -5,8 +5,8 @@ module.exports = (socket)->
     else
       socket.chaterName = name
       chatters.push(name)
-      socket.emit('init_chatters', chatters)
       socket.emit('notice', { from: 'System', content: "Welcome <b>#{name}</b>" })
+      socket.emit('init_chatters', chatters)
       socket.broadcast.emit('notice', {from: 'System', content: "<b>#{name}</b> Join the chatroom"})
       socket.broadcast.emit('chatters', chatters) # how to filter broadcast to the registed socket
   )
