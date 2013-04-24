@@ -42,6 +42,5 @@ server.listen(app.get('port'), function(){
 })
 
 global.socketConnection = []
-global.chatters = []
 
 io.sockets.on('connection', chatSocket)

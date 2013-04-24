@@ -1,3 +1,4 @@
+chatters = []
 module.exports = (socket)->
   socket.on('join', (name)->
     socket.chaterName = name
@@ -11,7 +12,7 @@ module.exports = (socket)->
     name = socket.chaterName
     console.log '###disconnect ' + name
     if name?
-      global.chatters = __.without(chatters, name)
+      chatters = __.without(chatters, name)
       console.log chatters
       socket.broadcast.emit('chatters', chatters)
       socket.broadcast.emit('notice', {from: 'System', content: "#{name} Leave the chatroom"})
